@@ -1,0 +1,5 @@
+ConsoleProgram.v12.suo
+*.config
+*.cache
+ConsoleProgram/bin/Debug/ConsoleProgram.vshost.exe
+ConsoleProgram/bin/Release/ConsoleProgram.vshost.exe
