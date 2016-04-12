@@ -20,12 +20,13 @@ namespace ConsoleProgram
             result = Func.Run();
 
             // Print result
-            Console.WriteLine(result? "True":"False");
+            //Console.WriteLine(result? "True":"False");
             return result ? 0 : 1;
         }
 
         private static bool GetArguments()
         {
+            Console.WriteLine("Copyright 2016 by Iverson.Hong\n");
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length < 2)
                 return false;
