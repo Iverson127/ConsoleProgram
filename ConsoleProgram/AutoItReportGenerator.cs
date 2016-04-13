@@ -26,8 +26,8 @@ namespace ConsoleProgram
             Excel.Visible = false;
             Excel.UserControl = true;  //宣告Excel唯讀
 
-            string curDir = System.Environment.CurrentDirectory;
-            string path = curDir + @"\ECAT Bulider Test Case Report (template).xlsx";
+            string startup = System.AppDomain.CurrentDomain.BaseDirectory;
+            string path = startup + @"ECATBuliderTestCaseReport.xlsx";
             Wb = Excel.Workbooks.Open(path, ReadOnly: true, Editable: true);
             Ws = Wb.Worksheets[1];
         }
@@ -47,7 +47,7 @@ namespace ConsoleProgram
 
             Wb.Close(false, Type.Missing, Type.Missing);
             Excel.Quit();
-            Console.WriteLine("Finished!");
+            Console.WriteLine("Done");
             return true;
         }
 
@@ -73,7 +73,7 @@ namespace ConsoleProgram
 
         private void CreateDefaultCells()
         {
-            Console.WriteLine("Create report default value...");
+            Console.WriteLine("Create default value...");
 
             Ws.Cells[2, "B"] = "1";
             Ws.Cells[2, "D"] = "ECAT Builder";

@@ -26,7 +26,7 @@ namespace ConsoleProgram
 
         private static bool GetArguments()
         {
-            Console.WriteLine("Copyright 2016 by Iverson.Hong\n");
+            Console.WriteLine("Copyright (C) 2016 by Iverson.Hong\n");
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length < 2)
                 return false;
