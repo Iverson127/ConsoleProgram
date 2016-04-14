@@ -21,11 +21,13 @@ namespace ConsoleProgram
 
             // Print result
             //Console.WriteLine(result? "True":"False");
+            Console.WriteLine("Done");
             return result ? 0 : 1;
         }
 
         private static bool GetArguments()
         {
+            Console.WriteLine("ConsoleProgram v.0.0.1");
             Console.WriteLine("Copyright (C) 2016 by Iverson.Hong\n");
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length < 2)

@@ -5,7 +5,6 @@ using System.Drawing;
 using System.IO;
 using Excel = Microsoft.Office.Interop.Excel;
 
-
 namespace ConsoleProgram
 {
     class AutoItReportGenerator : IConsoleProgram
@@ -45,9 +44,6 @@ namespace ConsoleProgram
             if (!result)
                 return false;
 
-            Wb.Close(false, Type.Missing, Type.Missing);
-            Excel.Quit();
-            Console.WriteLine("Done");
             return true;
         }
 
@@ -193,13 +189,38 @@ namespace ConsoleProgram
             Console.WriteLine("Save Report...");
             try
             {
-                string savePathFile = ExcelFileDirectory + @"/" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".xlsx";
+                string savePathFile = ExcelFileDirectory + @"\" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".xlsx";
                 Wb.SaveAs(savePathFile);
+
+                Wb.Close(false, Type.Missing, Type.Missing);
+                Excel.Quit();
+
+                MoveReportToPreFolder(savePathFile);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("儲存檔案出錯，檔案可能正在使用" + Environment.NewLine + ex.Message);
                 return false;
+            }
+
+            return true;
+        }
+
+        private bool MoveReportToPreFolder(string savePathFile)
+        {
+            string preDirectory = ExcelFileDirectory + @"\previous";
+            if (!Directory.Exists(preDirectory))
+                Directory.CreateDirectory(preDirectory);
+
+            string[] reportFiles = Directory.GetFiles(ExcelFileDirectory, "*.xlsx");
+
+            for (int i = 0; i < reportFiles.Length; i++)
+            {
+                if (reportFiles[i] == savePathFile)
+                    continue;
+
+                string reportName = System.IO.Path.GetFileNameWithoutExtension(reportFiles[i]);
+                File.Move(reportFiles[i], preDirectory + @"\" + reportName + ".xlsx"); // move to previous folder
             }
 
             return true;
