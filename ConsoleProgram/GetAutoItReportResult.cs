@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace ConsoleProgram
@@ -37,6 +33,9 @@ namespace ConsoleProgram
 
             if (failCount != 0)
                 return false;
+
+            Wb.Close(false, Type.Missing, Type.Missing);
+            Excel.Quit();
 
             return true;
         }
