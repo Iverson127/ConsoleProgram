@@ -27,7 +27,7 @@ namespace ConsoleProgram
 
         private static bool GetArguments()
         {
-            Console.WriteLine("ConsoleProgram v.0.0.1");
+            Console.WriteLine("ConsoleProgram v.0.3.0");
             Console.WriteLine("Copyright (C) 2016 by Iverson.Hong\n");
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length < 2)
@@ -49,6 +49,9 @@ namespace ConsoleProgram
                     break;
                 case "2":
                     Func = new AutoItReportGenerator();
+                    break;
+                case "3":
+                    Func = new GetAutoItReportResult();
                     break;
                 default:
                     Func = null;

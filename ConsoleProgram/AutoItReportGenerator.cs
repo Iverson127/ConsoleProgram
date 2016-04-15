@@ -24,11 +24,6 @@ namespace ConsoleProgram
             Excel = new Excel.Application();
             Excel.Visible = false;
             Excel.UserControl = true;  //宣告Excel唯讀
-
-            string startup = System.AppDomain.CurrentDomain.BaseDirectory;
-            string path = startup + @"ECATBuliderTestCaseReport.xlsx";
-            Wb = Excel.Workbooks.Open(path, ReadOnly: true, Editable: true);
-            Ws = Wb.Worksheets[1];
         }
 
         public bool Run()
@@ -49,7 +44,7 @@ namespace ConsoleProgram
 
         private bool InitPara()
         {
-            Console.WriteLine("Initial parameters...");
+            Console.WriteLine("Initial...");
 
             if (Program.ParaList.Count < 3)
                 return false;
@@ -63,6 +58,19 @@ namespace ConsoleProgram
 
             if (!Directory.Exists(ExcelFileDirectory))
                 Directory.CreateDirectory(ExcelFileDirectory);
+
+            string startup = System.AppDomain.CurrentDomain.BaseDirectory;
+            string path = startup + @"ECATBuliderTestCaseReport.xlsx";
+            try
+            {
+                Wb = Excel.Workbooks.Open(path, ReadOnly: true, Editable: true);
+                Ws = Wb.Worksheets[1];
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Exception: " + e.Message);
+                return false;
+            }
 
             return true;
         }
