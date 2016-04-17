@@ -18,24 +18,33 @@ namespace ConsoleProgram
             Excel.UserControl = true;  //宣告Excel唯讀
         }
 
-        public bool Run()
+        public int Run()
         {
             bool result = InitPara();
             if (!result)
-                return false;
+                return -1;
 
+            result = IsAllPass();
+            if (!result)
+                return -2;
+
+            Wb.Close(false, Type.Missing, Type.Missing);
+            Excel.Quit();
+
+            return 0;
+        }
+
+        private bool IsAllPass()
+        {
             string failCountStr = Ws.Cells[10, "F"].Text;
 
             int failCount;
-            result = Int32.TryParse(failCountStr, out failCount);
+            bool result = Int32.TryParse(failCountStr, out failCount);
             if (!result)
                 return false;
 
             if (failCount != 0)
                 return false;
-
-            Wb.Close(false, Type.Missing, Type.Missing);
-            Excel.Quit();
 
             return true;
         }

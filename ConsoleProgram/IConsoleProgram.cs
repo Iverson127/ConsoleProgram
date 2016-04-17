@@ -8,6 +8,6 @@ namespace ConsoleProgram
 {
     interface IConsoleProgram
     {
-        bool Run();
+        int Run();
     }
 }

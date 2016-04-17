@@ -26,20 +26,20 @@ namespace ConsoleProgram
             Excel.UserControl = true;  //宣告Excel唯讀
         }
 
-        public bool Run()
+        public int Run()
         {
             bool result = InitPara();
             if (!result)
-                return false;
+                return -1;
 
             CreateDefaultCells();
             RunTestCase();
 
             result = SaveReport();
             if (!result)
-                return false;
+                return -2;
 
-            return true;
+            return 0;
         }
 
         private bool InitPara()
@@ -197,7 +197,9 @@ namespace ConsoleProgram
             Console.WriteLine("Save Report...");
             try
             {
-                string savePathFile = ExcelFileDirectory + @"\" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".xlsx";
+                bool allPass = IsAllPass();
+                string resultStr = allPass ? "(Pass)" : "(Fail)";
+                string savePathFile = ExcelFileDirectory + @"\" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + resultStr + ".xlsx";
                 Wb.SaveAs(savePathFile);
 
                 Wb.Close(false, Type.Missing, Type.Missing);
@@ -230,6 +232,21 @@ namespace ConsoleProgram
                 string reportName = System.IO.Path.GetFileNameWithoutExtension(reportFiles[i]);
                 File.Move(reportFiles[i], preDirectory + @"\" + reportName + ".xlsx"); // move to previous folder
             }
+
+            return true;
+        }
+
+        private bool IsAllPass()
+        {
+            string failCountStr = Ws.Cells[10, "F"].Text;
+
+            int failCount;
+            bool result = Int32.TryParse(failCountStr, out failCount);
+            if (!result)
+                return false;
+
+            if (failCount != 0)
+                return false;
 
             return true;
         }

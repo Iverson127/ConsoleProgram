@@ -17,12 +17,8 @@ namespace ConsoleProgram
             if (Func == null)
                 return 1;
 
-            result = Func.Run();
-
-            // Print result
-            //Console.WriteLine(result? "True":"False");
             Console.WriteLine("Done");
-            return result ? 0 : 1;
+            return Func.Run();
         }
 
         private static bool GetArguments()
