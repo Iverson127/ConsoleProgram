@@ -22,28 +22,32 @@ namespace ConsoleProgram
         {
             bool result = InitPara();
             if (!result)
-                return -1;
+                return -999;
 
-            result = IsAllPass();
+            int failCount = 0;
+            result = FailCount(ref failCount);
             if (!result)
-                return -2;
+            {
+                Wb.Close(false, Type.Missing, Type.Missing);
+                Excel.Quit();
+                return -998;
+            }
 
             Wb.Close(false, Type.Missing, Type.Missing);
             Excel.Quit();
 
+            if (failCount < 0)
+                failCount = failCount * -1;
+
             return 0;
         }
 
-        private bool IsAllPass()
+        private bool FailCount(ref int failCount)
         {
             string failCountStr = Ws.Cells[10, "F"].Text;
 
-            int failCount;
             bool result = Int32.TryParse(failCountStr, out failCount);
             if (!result)
-                return false;
-
-            if (failCount != 0)
                 return false;
 
             return true;
